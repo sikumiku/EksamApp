@@ -26,7 +26,8 @@ namespace BusinessLogic.Factories
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
                 IdCode = dto.IdCode,
-                Birthday = dto.Birthday
+                Birthday = dto.Birthday,
+                PersonRoleId = dto.RoleId
             };
         }
     }

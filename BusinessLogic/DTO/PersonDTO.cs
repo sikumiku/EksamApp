@@ -18,14 +18,17 @@ namespace BusinessLogic.DTO
         public string Lastname { get; set; }
 
         [Required]
-        [MinLength(10)]
-        [MaxLength(20)]
+        [MinLength(3)]
+        [MaxLength(15)]
         public string IdCode { get; set; }
 
         [Required]
         public DateTime Birthday { get; set; }
 
         public int Age { get; set; }
+
+        [Required]
+        public int RoleId { get; set; }
 
         public string Role { get; set; }
 
