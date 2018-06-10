@@ -16,7 +16,7 @@ namespace BusinessLogic.Factories
     {
         public PersonDTO Create(Person p)
         {
-            return PersonDTO.CreateFromDomainWithCars(p);
+            return PersonDTO.CreateFromDomain(p);
         }
 
         public Person Create(PersonDTO dto)

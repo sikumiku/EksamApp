@@ -17,7 +17,7 @@ namespace DAL.App.EF
             return new Dictionary<Type, Func<IDataContext, object>>()
             {
                 {typeof(IPersonRepository), (dataContext) => new EFPersonRepository(dataContext as ApplicationDbContext) },
-                {typeof(ICarRepository), (dataContext) => new EFCarRepository(dataContext as ApplicationDbContext) },
+                {typeof(ISiteRepository), (dataContext) => new EFSiteRepository(dataContext as ApplicationDbContext) },
             };
         }
 

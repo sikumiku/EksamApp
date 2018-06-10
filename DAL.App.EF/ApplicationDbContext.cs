@@ -18,7 +18,8 @@ namespace DAL.App.EF
 
 
         public DbSet<Person> People { get; set; }
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<Site> Sites { get; set; }
+        public DbSet<PersonRole> PersonRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

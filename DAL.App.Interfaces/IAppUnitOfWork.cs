@@ -9,7 +9,7 @@ namespace DAL.App.Interfaces
     {
         IPersonRepository People { get; }
 
-        ICarRepository Cars { get; }
+        ISiteRepository Sites { get; }
 
     }
 }

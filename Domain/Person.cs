@@ -9,20 +9,29 @@ namespace Domain
         public int PersonId { get; set; }
 
         [Required]
-        [MaxLength(128)]
+        [MinLength(3)]
+        [MaxLength(45)]
         public string Firstname { get; set; }
         [Required]
-        [MaxLength(128)]
+        [MinLength(3)]
+        [MaxLength(45)]
         public string Lastname { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(15)]
         public string IdCode { get; set; }
 
+        [Required]
         public DateTime Birthday { get; set; }
 
         public bool Active { get; set; } = true;
 
-        public virtual List<Car> Cars { get; set; } = new List<Car>();
+        //foreign keys
+        public int SiteId { get; set; }
+        public virtual Site Site { get; set; }
+        public int PersonRoleId { get; set; }
+        public virtual PersonRole PersonRole { get; set; }
     }
 
 }

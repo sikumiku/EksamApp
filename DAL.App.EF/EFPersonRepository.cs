@@ -27,17 +27,17 @@ namespace DAL.App.EF
         }
 
         // kui tahame kaasa anda ka kontaktid inimesega, peaks üle kirjutama EFRepository Find meetodi, antud meetod peaks olema virtual
-        public override Person Find(params object[] id)
-        {
-            return RepositoryDbSet
-                .Include(x => x.Cars)
-                .SingleOrDefault(x => (int)id[0] == x.PersonId);
-        }
+        //public override Person Find(params object[] id)
+        //{
+        //    return RepositoryDbSet
+        //        .Include(x => x.Sites)
+        //        .SingleOrDefault(x => (int)id[0] == x.PersonId);
+        //}
 
-        public override IEnumerable<Person> All()
-        {
-            return RepositoryDbSet.AsQueryable()
-                .Include(x => x.Cars).ToList();
-        }
+        //public override IEnumerable<Person> All()
+        //{
+        //    return RepositoryDbSet.AsQueryable()
+        //        .Include(x => x.Sites).ToList();
+        //}
     }
 }

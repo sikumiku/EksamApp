@@ -13,95 +13,95 @@ namespace WebApp.Controllers.api
     [Route("api/v1/cars")]
     public class CarsController : Controller
     {
-        private readonly ICarService _carService;
+        private readonly ISiteService _siteService;
 
-        public CarsController(ICarService carService)
+        public CarsController(ISiteService siteService)
         {
-            _carService = carService;
+            _siteService = siteService;
         }
 
-        // GET: api/v1/Cars
+        // GET: api/v1/Sites
         [HttpGet]
-        [ProducesResponseType(typeof(List<CarDTO>), 200)]
+        [ProducesResponseType(typeof(List<SiteDTO>), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(429)]
         [ProducesResponseType(500)]
         public IActionResult Get()
         {
-            return Ok(_carService.GetAllCars());
+            return Ok(_siteService.GetAllSites());
         }
 
-        // GET: api/cars/find
-        [HttpGet]
-        [Route("find")]
-        [ProducesResponseType(typeof(List<CarDTO>), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(429)]
-        [ProducesResponseType(500)]
-        public IActionResult Find(string licensePlate, int personId)
-        {
-            IEnumerable<CarDTO> cars = new List<CarDTO>();
-            if (licensePlate != null)
-            {
-                cars = _carService.FindCarsByLicensePlate(licensePlate);
-            } else if (personId != 0)
-            {
-                cars = _carService.FindCarsByPersonId(personId);
-            }
-            else
-            {
-                return Ok(_carService.GetAllCars());
-            }
+        //// GET: api/cars/find
+        //[HttpGet]
+        //[Route("find")]
+        //[ProducesResponseType(typeof(List<SiteDTO>), 200)]
+        //[ProducesResponseType(404)]
+        //[ProducesResponseType(429)]
+        //[ProducesResponseType(500)]
+        //public IActionResult Find(string licensePlate, int personId)
+        //{
+        //    IEnumerable<SiteDTO> cars = new List<SiteDTO>();
+        //    if (licensePlate != null)
+        //    {
+        //        cars = _siteService.FindCarsByLicensePlate(licensePlate);
+        //    } else if (personId != 0)
+        //    {
+        //        cars = _siteService.FindCarsByPersonId(personId);
+        //    }
+        //    else
+        //    {
+        //        return Ok(_siteService.GetAllSites());
+        //    }
 
-            if (!cars.Any())
-            {
-                return NotFound();
-            }
+        //    if (!cars.Any())
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(cars);
-        }
+        //    return Ok(cars);
+        //}
 
-        // GET: api/v1/Cars/5
+        // GET: api/v1/Sites/5
         [HttpGet("{id}", Name = "Get")]
-        [ProducesResponseType(typeof(CarDTO), 200)]
+        [ProducesResponseType(typeof(SiteDTO), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(429)]
         [ProducesResponseType(500)]
         public IActionResult Get(int id)
         {
-            var p = _carService.GetCarById(id);
+            var p = _siteService.GetSiteById(id);
             if (p == null) return NotFound();
             return Ok(p);
         }
         
-        // POST: api/v1/Cars
+        // POST: api/v1/Sites
         [HttpPost]
-        [ProducesResponseType(typeof(CarDTO), 201)]
+        [ProducesResponseType(typeof(SiteDTO), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(429)]
         [ProducesResponseType(500)]
-        public IActionResult Post([FromBody]CarDTO car)
+        public IActionResult Post([FromBody]SiteDTO site)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var newCar = _carService.AddNewCar(car);
+            var newCar = _siteService.AddNewSite(site);
 
-            return CreatedAtAction("Get", new { id = newCar.CarId }, newCar);
+            return CreatedAtAction("Get", new { id = newCar.SiteId }, newCar);
         }
 
-        // PUT: api/v1/Cars/5
+        // PUT: api/v1/Sites/5
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(429)]
         [ProducesResponseType(500)]
-        public IActionResult Put(int id, [FromBody]CarDTO car)
+        public IActionResult Put(int id, [FromBody]SiteDTO site)
         {
             if (!ModelState.IsValid) return BadRequest();
-            var p = _carService.GetCarById(id);
+            var p = _siteService.GetSiteById(id);
 
             if (p == null) return NotFound();
-            _carService.UpdateCar(id, car);
+            _siteService.UpdateSite(id, site);
 
             return NoContent();
         }
@@ -113,16 +113,16 @@ namespace WebApp.Controllers.api
         /// <response code="204">Person was successfully deleted, no content to be returned</response>
         /// <response code="404">Person not found by given ID</response>
         /// <response code="500">Internal error, unable to process request</response>
-        // DELETE: api/v1/Cars/5
+        // DELETE: api/v1/Sites/5
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult Delete(int id)
         {
-            var p = _carService.GetCarById(id);
+            var p = _siteService.GetSiteById(id);
             if (p == null) return NotFound();
-            _carService.DeleteCar(id);
+            _siteService.DeleteSites(id);
             return NoContent();
         }
     }

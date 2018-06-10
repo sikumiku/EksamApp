@@ -27,7 +27,9 @@ namespace BusinessLogic.DTO
 
         public int Age { get; set; }
 
-        public List<CarDTO> Cars { get; set; }
+        public string Role { get; set; }
+
+        public int SiteId { get; set; }
 
         public static PersonDTO CreateFromDomain(Person p)
         {
@@ -40,19 +42,10 @@ namespace BusinessLogic.DTO
                 Lastname = p.Lastname,
                 IdCode = p.IdCode,
                 Birthday = p.Birthday,
-                Age = DateTime.Now.Year - p.Birthday.Year
+                Age = DateTime.Now.Year - p.Birthday.Year,
+                Role = p.PersonRole.Name,
+                SiteId = p.SiteId
             };
-        }
-
-        public static PersonDTO CreateFromDomainWithCars(Person p)
-        {
-            var person = CreateFromDomain(p);
-            if (person == null) return null;
-
-            person.Cars = p?.Cars?
-                .Select(CarDTO.CreateFromDomain).ToList();
-            return person;
-
         }
     }
 }

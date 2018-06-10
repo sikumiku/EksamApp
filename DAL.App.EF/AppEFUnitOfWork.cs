@@ -22,7 +22,7 @@ namespace DAL.App.EF
 
         public IPersonRepository People => GetCustomRepository<IPersonRepository>();
 
-        public ICarRepository Cars => GetCustomRepository<ICarRepository>();
+        public ISiteRepository Sites => GetCustomRepository<ISiteRepository>();
 
 
         public void SaveChanges()

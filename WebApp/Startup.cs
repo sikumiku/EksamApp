@@ -41,8 +41,8 @@ namespace WebApp
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonFactory, PersonFactory>();
-            services.AddScoped<ICarService, CarService>();
-            services.AddScoped<ICarFactory, CarFactory>();
+            services.AddScoped<ISiteService, SiteService>();
+            services.AddScoped<ISiteFactory, SiteFactory>();
 
             // Add uow to DI container
             // scoped - object lives for duration of web request

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace WebApp.Migrations
+namespace DAL.App.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -71,38 +71,6 @@ namespace WebApp.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Domain.Car", b =>
-                {
-                    b.Property<int>("CarId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CarBrand")
-                        .IsRequired()
-                        .HasMaxLength(54);
-
-                    b.Property<string>("CarModel")
-                        .IsRequired()
-                        .HasMaxLength(54);
-
-                    b.Property<string>("LicensePlate")
-                        .IsRequired()
-                        .HasMaxLength(10);
-
-                    b.Property<string>("ManufactureYear")
-                        .IsRequired()
-                        .HasMaxLength(4);
-
-                    b.Property<int>("PersonId");
-
-                    b.Property<DateTime>("UpdateTime");
-
-                    b.HasKey("CarId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Cars");
-                });
-
             modelBuilder.Entity("Domain.Person", b =>
                 {
                     b.Property<int>("PersonId")
@@ -114,18 +82,74 @@ namespace WebApp.Migrations
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasMaxLength(128);
+                        .HasMaxLength(45);
 
                     b.Property<string>("IdCode")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(15);
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasMaxLength(128);
+                        .HasMaxLength(45);
+
+                    b.Property<int>("PersonRoleId");
+
+                    b.Property<int>("SiteId");
 
                     b.HasKey("PersonId");
 
+                    b.HasIndex("PersonRoleId");
+
+                    b.HasIndex("SiteId");
+
                     b.ToTable("People");
+                });
+
+            modelBuilder.Entity("Domain.PersonRole", b =>
+                {
+                    b.Property<int>("PersonRoleId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("PersonRoleId");
+
+                    b.ToTable("PersonRoles");
+                });
+
+            modelBuilder.Entity("Domain.Site", b =>
+                {
+                    b.Property<int>("SiteId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AddressFirstLine")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Locality")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(45);
+
+                    b.Property<string>("PostCode")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.HasKey("SiteId");
+
+                    b.ToTable("Sites");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -236,11 +260,16 @@ namespace WebApp.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Domain.Car", b =>
+            modelBuilder.Entity("Domain.Person", b =>
                 {
-                    b.HasOne("Domain.Person", "Person")
-                        .WithMany("Cars")
-                        .HasForeignKey("PersonId")
+                    b.HasOne("Domain.PersonRole", "PersonRole")
+                        .WithMany("Persons")
+                        .HasForeignKey("PersonRoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Site", "Site")
+                        .WithMany("Persons")
+                        .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

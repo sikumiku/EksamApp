@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace WebApp.Migrations
+namespace DAL.App.EF.Migrations
 {
-    public partial class firstDb : Migration
+    public partial class newDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,19 +49,35 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "PersonRoles",
                 columns: table => new
                 {
-                    PersonId = table.Column<int>(nullable: false)
+                    PersonRoleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BirthDay = table.Column<DateTime>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 128, nullable: false),
-                    IdCode = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 128, nullable: false)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.PersonId);
+                    table.PrimaryKey("PK_PersonRoles", x => x.PersonRoleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sites",
+                columns: table => new
+                {
+                    SiteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddressFirstLine = table.Column<string>(maxLength: 45, nullable: false),
+                    Country = table.Column<string>(maxLength: 45, nullable: false),
+                    CreateTime = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 100, nullable: true),
+                    Locality = table.Column<string>(maxLength: 45, nullable: false),
+                    Name = table.Column<string>(maxLength: 45, nullable: false),
+                    PostCode = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sites", x => x.SiteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,26 +187,33 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
+                name: "People",
                 columns: table => new
                 {
-                    CarId = table.Column<int>(nullable: false)
+                    PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CarBrand = table.Column<string>(maxLength: 54, nullable: false),
-                    CarModel = table.Column<string>(maxLength: 54, nullable: false),
-                    LicensePlate = table.Column<string>(maxLength: 10, nullable: false),
-                    ManufactureYear = table.Column<string>(maxLength: 4, nullable: false),
-                    PersonId = table.Column<int>(nullable: false),
-                    UpdateTime = table.Column<DateTime>(nullable: false)
+                    Active = table.Column<bool>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: false),
+                    Firstname = table.Column<string>(maxLength: 45, nullable: false),
+                    IdCode = table.Column<string>(maxLength: 15, nullable: false),
+                    Lastname = table.Column<string>(maxLength: 45, nullable: false),
+                    PersonRoleId = table.Column<int>(nullable: false),
+                    SiteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.CarId);
+                    table.PrimaryKey("PK_People", x => x.PersonId);
                     table.ForeignKey(
-                        name: "FK_Cars_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "PersonId",
+                        name: "FK_People_PersonRoles_PersonRoleId",
+                        column: x => x.PersonRoleId,
+                        principalTable: "PersonRoles",
+                        principalColumn: "PersonRoleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_People_Sites_SiteId",
+                        column: x => x.SiteId,
+                        principalTable: "Sites",
+                        principalColumn: "SiteId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -234,9 +257,14 @@ namespace WebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_PersonId",
-                table: "Cars",
-                column: "PersonId");
+                name: "IX_People_PersonRoleId",
+                table: "People",
+                column: "PersonRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_People_SiteId",
+                table: "People",
+                column: "SiteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -257,7 +285,7 @@ namespace WebApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "People");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -266,7 +294,10 @@ namespace WebApp.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "PersonRoles");
+
+            migrationBuilder.DropTable(
+                name: "Sites");
         }
     }
 }

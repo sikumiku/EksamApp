@@ -6,7 +6,7 @@ using Domain;
 
 namespace DAL.App.Interfaces
 {
-    public interface ICarRepository : IRepository<Car>
+    public interface ISiteRepository : IRepository<Site>
     {
         /// <summary>
         /// Check for entity existance by PK value
@@ -15,8 +15,8 @@ namespace DAL.App.Interfaces
         /// <returns></returns>
         bool Exists(int id);
 
-        List<Car> FindByLicensePlate(string licensePlate);
+        //List<Site> FindByLicensePlate(string licensePlate);
 
-        List<Car> FindByPersonId(int personId);
+        //List<Site> FindByPersonId(int personId);
     }
 }
